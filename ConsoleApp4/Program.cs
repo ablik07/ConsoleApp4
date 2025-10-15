@@ -73,3 +73,35 @@ public class Student : Person
         return result;
     }
 }
+
+public class Teacher : Person
+{
+    private string department;
+    private List<Course> teachingCourses;
+
+    public Teacher(int id, string name, int age, string email, string department)
+        : base(id, name, age, email)
+    {
+        this.department = department;
+        teachingCourses = new List<Course>();
+    }
+
+    public string Department => department;
+    public List<Course> TeachingCourses => teachingCourses;
+
+    public override string GetRole() => "Преподаватель";
+
+    public override string GetInfo()
+    {
+        return base.GetInfo() + $", Кафедра: {department}";
+    }
+
+    public void Assign(Course course)
+    {
+        if (!teachingCourses.Contains(course))
+        {
+            teachingCourses.Add(course);
+            course.SetTeacher(this);
+        }
+    }
+}
