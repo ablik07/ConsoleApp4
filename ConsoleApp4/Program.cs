@@ -105,3 +105,62 @@ public class Teacher : Person
         }
     }
 }
+
+public class Course
+{
+    private int id;
+    private string title;
+    private string description;
+    private Teacher teacher;
+    private List<Student> students;
+
+    public Course(int id, string title, string description)
+    {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        students = new List<Student>();
+        teacher = null;
+    }
+
+    public int Id => id;
+    public string Title => title;
+    public string Description => description;
+    public Teacher Teacher => teacher;
+    public List<Student> Students => students;
+
+    public string GetInfo()
+    {
+        string teacherInfo = teacher != null ? teacher.Name : "Не назначен";
+        return $"Курс: {title}\nОписание: {description}\n" +
+               $"Преподаватель: {teacherInfo}\n" +
+               $"Количество студентов: {students.Count}";
+    }
+
+    public void SetTeacher(Teacher teacher)
+    {
+        this.teacher = teacher;
+    }
+
+    public void AddStudent(Student student)
+    {
+        if (!students.Contains(student))
+        {
+            students.Add(student);
+        }
+    }
+
+    public string GetStudents()
+    {
+        if (students.Count == 0)
+            return "На курсе нет студентов";
+
+        string result = "";
+        foreach (var student in students)
+        {
+            result += $"- {student.Name} ({student.Major})\n";
+        }
+        return result;
+    }
+}
+
