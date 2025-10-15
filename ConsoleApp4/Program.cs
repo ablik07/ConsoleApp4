@@ -164,3 +164,114 @@ public class Course
     }
 }
 
+public class University
+{
+    private List<Student> students;
+    private List<Teacher> teachers;
+    private List<Course> courses;
+
+    public University()
+    {
+        students = new List<Student>();
+        teachers = new List<Teacher>();
+        courses = new List<Course>();
+        CreateData();
+    }
+
+    private void CreateData()
+    {
+        AddTeacher("Анна Иванова", 35, "anna@mail.ru", "Информатика");
+        AddTeacher("Петр Сидоров", 42, "petr@mail.ru", "Математика");
+
+        AddStudent("Мария Козлова", 20, "maria@mail.ru", "Программирование");
+        AddStudent("Алексей Новиков", 21, "alex@mail.ru", "Математика");
+
+        AddCourse("Основы C#");
+        AddCourse("Алгебра");
+
+        AssignTeacher(1, 1);
+        AssignTeacher(2, 2);
+
+        EnrollStudent(1, 1);
+        EnrollStudent(2, 2);
+    }
+
+    public void AddStudent(string name, int age, string email, string major)
+    {
+        var id = students.Count + 1;
+        var student = new Student(id, name, age, email, major);
+        students.Add(student);
+    }
+
+    public Student FindStudent(int id)
+    {
+        return students.Find(student => student.Id == id);
+    }
+
+    public void AddTeacher(string name, int age, string email, string department)
+    {
+        var id = teachers.Count + 1;
+        var teacher = new Teacher(id, name, age, email, department);
+        teachers.Add(teacher);
+    }
+
+    public Teacher FindTeacher(int id)
+    {
+        return teachers.Find(teacher => teacher.Id == id);
+    }
+
+    public void AddCourse(string title)
+    {
+        var id = courses.Count + 1;
+        var course = new Course(id, title, "");
+        courses.Add(course);
+    }
+
+    public Course FindCourse(int id)
+    {
+        return courses.Find(course => course.Id == id);
+    }
+
+    public List<Student> AllStudents() => students;
+    public List<Teacher> AllTeachers() => teachers;
+    public List<Course> AllCourses() => courses;
+
+    public bool EnrollStudent(int studentId, int courseId)
+    {
+        var student = FindStudent(studentId);
+        var course = FindCourse(courseId);
+
+        if (student != null && course != null)
+        {
+            student.Enroll(course);
+            return true;
+        }
+        return false;
+    }
+
+    public bool AssignTeacher(int teacherId, int courseId)
+    {
+        var teacher = FindTeacher(teacherId);
+        var course = FindCourse(courseId);
+
+        if (teacher != null && course != null)
+        {
+            teacher.Assign(course);
+            return true;
+        }
+        return false;
+    }
+
+    public string StudentCourses(int studentId)
+    {
+        var student = FindStudent(studentId);
+        return student?.GetCourses() ?? "Студент не найден";
+    }
+
+    public string CourseStudents(int courseId)
+    {
+        var course = FindCourse(courseId);
+        return course?.GetStudents() ?? "Курс не найден";
+    }
+}
+
