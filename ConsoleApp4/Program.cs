@@ -275,3 +275,73 @@ public class University
     }
 }
 
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var university = new University();
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Университетская система");
+            Console.WriteLine("1. Список студентов");
+            Console.WriteLine("2. Список преподавателей");
+            Console.WriteLine("3. Список курсов");
+            Console.WriteLine("4. Выход");
+            Console.Write("Введите номер: ");
+
+            var choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    ShowStudents(university);
+                    break;
+                case "2":
+                    ShowTeachers(university);
+                    break;
+                case "3":
+                    ShowCourses(university);
+                    break;
+                case "4":
+                    return;
+                default:
+                    Console.WriteLine("Неверный ввод");
+                    break;
+            }
+            Console.WriteLine("\nНажмите Enter для продолжения");
+            Console.ReadKey();
+        }
+    }
+
+    private static void ShowStudents(University university)
+    {
+        var students = university.AllStudents();
+        Console.WriteLine("\nВсе студенты:");
+        foreach (var student in students)
+        {
+            Console.WriteLine(student.GetInfo());
+        }
+    }
+
+    private static void ShowTeachers(University university)
+    {
+        var teachers = university.AllTeachers();
+        Console.WriteLine("\nВсе преподаватели:");
+        foreach (var teacher in teachers)
+        {
+            Console.WriteLine(teacher.GetInfo());
+        }
+    }
+
+    private static void ShowCourses(University university)
+    {
+        var courses = university.AllCourses();
+        Console.WriteLine("\nВсе курсы:");
+        foreach (var course in courses)
+        {
+            Console.WriteLine(course.GetInfo());
+            Console.WriteLine();
+        }
+    }
+}
